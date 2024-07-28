@@ -5,16 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Income</title>
     <link rel="stylesheet" href="../css/style.css"/>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const incomeForm = document.getElementById('incomeForm');
+
+            incomeForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const incomeInput = document.getElementById('incomeInput').value;
+                
+
+                const incomeamount = {
+                    incomeInput
+                };
+
+                // Store data in local storage
+                localStorage.setItem('incomeamount', JSON.stringify(incomeamount));
+
+                // Redirect to another page (replace 'index.html' with your actual page name)
+                window.location.href = "index.html";
+            });
+        });
+    </script>
 </head>
 <body>
     <form id="incomeForm">
         <section class="Income section" id="Income">
             <h2 class="section-title">Income</h2>
-            <div>
-                <h5>Income</h5>
-                <input type="number" id="incomeInput" name="amount" value="0" min="0.01" step="0.01" required />
-                <span id="Income">₹0.00</span>
-                <button type="button" onclick="addIncome()">Add Income</button>
+            <div class="inc-exp-container">
+                <div class="inc">
+                    <h5>Income</h5>
+                    <input type="number" id="incomeInput" name="amount" value="0" min="0.01" step="0.01" required />
+                    <span id="Income">₹0.00</span>
+                    <button id="inc-amt" class="amt plus" type="button" onclick="addIncome()">Add Income</button>
+
+                    
+                </div>
             </div>
         </section>
     </form>

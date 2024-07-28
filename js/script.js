@@ -1,4 +1,5 @@
 //script.js
+
 document.addEventListener("DOMContentLoaded", () => {
   const expenseForm = document.getElementById("expense-form");
   const expenseList = document.getElementById("expense-list");
@@ -89,4 +90,50 @@ document.addEventListener("DOMContentLoaded", () => {
       const formattedTotal = total.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
       totalAmount.textContent = total.toFixed(2);
   }
+});
+
+
+
+function addIncome() {
+    const incomeInput = document.getElementById('incomeInput');
+    const incomeDisplay = document.getElementById('Income');
+  
+    let currentIncome = parseFloat(incomeDisplay.textContent.replace('₹', ''));
+    let newIncome = parseFloat(incomeInput.value);
+  
+    currentIncome += newIncome;
+    incomeDisplay.textContent = '₹' + currentIncome.toFixed(2);
+    incomeInput.value = ''; // Clear the input field
+  }
+
+  
+  
+// Function to add income
+function addIncome() {
+    // Get the input value
+    const incomeInput = document.getElementById('incomeInput');
+    const incomeValue = parseFloat(incomeInput.value);
+
+    // Validate the input
+    if (isNaN(incomeValue) || incomeValue <= 0) {
+        alert('Please enter a valid amount greater than 0.');
+        return;
+    }
+
+    // Get the current total income
+    const totalIncomeElement = document.getElementById('Income');
+    const currentTotalIncome = parseFloat(totalIncomeElement.textContent.replace('₹', ''));
+
+    // Update the total income
+    const newTotalIncome = currentTotalIncome + incomeValue;
+    totalIncomeElement.textContent = `₹${newTotalIncome.toFixed(2)}`;
+
+    // Clear the input field
+    incomeInput.value = '0';
+}
+
+// Optional: Add event listener for form submission to prevent page refresh
+document.getElementById('incomeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    addIncome();
 });

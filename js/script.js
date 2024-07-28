@@ -1,51 +1,92 @@
-const transactionContainer = document.querySelector(".Transaction");
-const viewTransactionsBtn = document.getElementById("viewTransactionsBtn"); // Optional button
-const transactionForm = document.getElementById("transactionForm");
+//script.js
+document.addEventListener("DOMContentLoaded", () => {
+  const expenseForm = document.getElementById("expense-form");
+  const expenseList = document.getElementById("expense-list");
+  const totalAmount = document.getElementById("total-amount");
+  const filterCategory = document.getElementById("filter-category");
 
-const transactions = []; // Replace with your existing logic for storing transactions
+  let expenses = [];
 
+  expenseForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const category = document.getElementById("expense-category").value;
+      const date = document.getElementById("expense-date").value;
+      const name = document.getElementById("expense-name").value;
+      const amount = parseFloat(document.getElementById("expense-amount").value);
+      
+      
 
-function addIncome() {
-  // Get the input value
-  const incomeInput = document.getElementById('incomeInput');
-  const incomeValue = parseFloat(incomeInput.value);
+      const expense = {
+          id: Date.now(),
+          category,
+          date,
+          name,
+          amount
+      };
 
-  // Get the current total income
-  const totalIncomeSpan = document.getElementById('Income');
-  let currentTotal = parseFloat(totalIncomeSpan.textContent.replace('₹', ''));
+      expenses.push(expense);
+      displayExpenses(expenses);
+      updateTotalAmount();
 
-  // Calculate the new total
-  const newTotal = currentTotal + incomeValue;
+      expenseForm.reset();
+  });
 
-  // Update the total income display
-  totalIncomeSpan.textContent = '₹' + newTotal.toFixed(2);
+  expenseList.addEventListener("click", (e) => {
+      if (e.target.classList.contains("delete-btn")) {
+          const id = parseInt(e.target.dataset.id);
+          expenses = expenses.filter(expense => expense.id !== id);
+          displayExpenses(expenses);
+          updateTotalAmount();
+      }
 
-  // Clear the input field
-  incomeInput.value = '';
-}
+      if (e.target.classList.contains("edit-btn")) {
+          const id = parseInt(e.target.dataset.id);
+          const expense = expenses.find(expense => expense.id === id);
+          document.getElementById("expense-category").value = expense.category;
+          document.getElementById("expense-date").value = expense.date;
+          document.getElementById("expense-name").value = expense.name;
+          document.getElementById("expense-amount").value = expense.amount;
+          
 
-function displayTransactions() {
-  const transactionList = document.getElementById("transactionList");
-  transactionList.innerHTML = "";
+          expenses = expenses.filter(expense => expense.id !== id);
+          displayExpenses(expenses);
+          updateTotalAmount();
+      }
+  });
 
-  for (const transaction of transactions) {
-    const transactionItem = document.createElement("div");
-    transactionItem.classList.add("transaction-item");
+  filterCategory.addEventListener("change", (e) => {
+      const category = e.target.value;
+      if (category === "All") {
+          displayExpenses(expenses);
+      } else {
+          const filteredExpenses = expenses.filter(expense => expense.category === category);
+          displayExpenses(filteredExpenses);
+      }
+  });
 
-    // Create elements for each transaction property (category, amount, date, description)
-    const categoryElement = document.createElement("p");
-    categoryElement.textContent = transaction.category;
-    // ... similar code for amount, date, and description elements
+  function displayExpenses(expenses) {
+      expenseList.innerHTML = "";
+      expenses.forEach(expense => {
+          const row = document.createElement("tr");
 
-    transactionItem.appendChild(categoryElement);
-    // ... append other elements to transactionItem
+          row.innerHTML = `
+              <td>${expense.category}</td>
+              <td>${expense.date}</td>
+              <td>${expense.name}</td>
+              <td>${expense.amount.toFixed(2)}</td>
+              <td>
+                  <button class="edit-btn" data-id="${expense.id}">Edit</button>
+                  <button class="delete-btn" data-id="${expense.id}">Delete</button>
+              </td>
+          `;
 
-    transactionList.appendChild(transactionItem);
+          expenseList.appendChild(row);
+      });
   }
-}
 
-
-
-
-
-
+  function updateTotalAmount() {
+      const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+      const formattedTotal = total.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
+      totalAmount.textContent = total.toFixed(2);
+  }
+});

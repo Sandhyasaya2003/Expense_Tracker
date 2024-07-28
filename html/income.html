@@ -8,29 +8,34 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const incomeForm = document.getElementById('incomeForm');
-
+            const incomeInput = document.getElementById('incomeInput');
+            const incomeDisplay = document.getElementById('Income');
+            const storedIncome = localStorage.getItem('income');
+            if (storedIncome) {
+                const parsedIncome = parseFloat(storedIncome);
+                if (!isNaN(parsedIncome)) {
+                    incomeInput.value = parsedIncome;
+                    incomeDisplay.textContent = '₹' + parsedIncome.toFixed(2);
+                } else {
+                    console.error('Invalid income value stored:', storedIncome);
+                }
+                incomeInput.value = storedIncome;
+                incomeDisplay.textContent = '₹' + storedIncome;
+            }
             incomeForm.addEventListener('submit', (event) => {
                 event.preventDefault();
-
-                const incomeInput = document.getElementById('incomeInput').value;
-                
-
-                const incomeamount = {
-                    incomeInput
-                };
-
-                // Store data in local storage
-                localStorage.setItem('incomeamount', JSON.stringify(incomeamount));
-
-                // Redirect to another page (replace 'index.html' with your actual page name)
-                window.location.href = "index.html";
+                const newIncome = parseFloat(incomeInput.value);
+                Console.log(newIncome)
+                localStorage.setItem('income', newIncome);
+                incomeDisplay.textContent = '₹' + newIncome.toFixed(2);
             });
         });
+
     </script>
 </head>
 <body>
     <form id="incomeForm">
-        <section class="Income section" id="Income">
+        <section class="Income section" id="Income-sec">
             <h2 class="section-title">Income</h2>
             <div class="inc-exp-container">
                 <div class="inc">

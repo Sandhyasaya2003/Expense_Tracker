@@ -5,9 +5,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const expenseList = document.getElementById("expense-list");
   const totalAmount = document.getElementById("total-amount");
   const filterCategory = document.getElementById("filter-category");
-
+  const dashboardExpenseAmount = document.getElementById("Expense")
+  const BalanceDashboard = document.getElementById("Balance")
+//   const expenseAmount = document.getElementById("Expense").textContent
+//   console.log("expenseAmount",expenseAmount)
+//   const incomeAmount = document.getElementById("Income").textContent
+//   console.log("incomeAmount",incomeAmount)
+ // BalanceDashboard.textContent = incomeAmount- expenseAmount
   let expenses = [];
-
+  getIncomeFromLocalStorage();
   expenseForm.addEventListener("submit", (e) => {
       e.preventDefault();
       const category = document.getElementById("expense-category").value;
@@ -28,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
       expenses.push(expense);
       displayExpenses(expenses);
       updateTotalAmount();
-
+      balanceAmountDashBoard()
       expenseForm.reset();
   });
 
@@ -52,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
           expenses = expenses.filter(expense => expense.id !== id);
           displayExpenses(expenses);
           updateTotalAmount();
+
       }
   });
 
@@ -64,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
           displayExpenses(filteredExpenses);
       }
   });
-
   function displayExpenses(expenses) {
       expenseList.innerHTML = "";
       expenses.forEach(expense => {
@@ -89,11 +95,40 @@ document.addEventListener("DOMContentLoaded", () => {
       const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
       const formattedTotal = total.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
       totalAmount.textContent = total.toFixed(2);
+      dashboardExpenseAmount.textContent = total.toFixed(2);
   }
+
+  function balanceAmountDashBoard(){
+    // Get the expense and income amounts as text content and remove the '₹' symbol
+    const expenseAmountText = document.getElementById("Expense").textContent.replace('₹', '');
+    const incomeAmountText = document.getElementById("Income").textContent.replace('₹', '');
+
+    // Convert the text content to integers
+    const expenseAmount = parseInt(expenseAmountText, 10);
+    const incomeAmount = parseInt(incomeAmountText, 10);
+
+    // Log the amounts for debugging
+    console.log("expenseAmount", expenseAmount);
+    console.log("incomeAmount", incomeAmount);
+
+    // Calculate the balance
+    const balance = incomeAmount - expenseAmount;
+console.log("balance",balance)
+    // Update the balance on the dashboard
+    const BalanceDashboard = document.getElementById("Balance");
+    BalanceDashboard.textContent = `${balance}`;
+}
+
+  balanceAmountDashBoard();
 });
 
+function getIncomeFromLocalStorage(){
+    const incomeAmount = localStorage.getItem("income")
+    console.log("IncomeAmount",incomeAmount)
+    const Income = document.getElementById("Income")
+    Income.textContent = incomeAmount
 
-
+}
 function addIncome() {
     const incomeInput = document.getElementById('incomeInput');
     const incomeDisplay = document.getElementById('Income');
@@ -102,12 +137,9 @@ function addIncome() {
     let newIncome = parseFloat(incomeInput.value);
   
     currentIncome += newIncome;
-    incomeDisplay.textContent = '₹' + currentIncome.toFixed(2);
+    incomeDisplay.textContent =  currentIncome.toFixed(2);
     incomeInput.value = ''; // Clear the input field
   }
-
-  
-  
 // Function to add income
 function addIncome() {
     // Get the input value
@@ -131,10 +163,11 @@ function addIncome() {
     // Clear the input field
     incomeInput.value = '0';
 }
-
 // Optional: Add event listener for form submission to prevent page refresh
 document.getElementById('incomeForm').addEventListener('submit', function(event) {
     event.preventDefault();
     addIncome();
 });
+
+
 

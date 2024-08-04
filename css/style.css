@@ -290,3 +290,11 @@ form button:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-row-gap: 50px;
+  grid-column-gap: 10px;
+  background-color: #fcfcfc;
+  padding: 10px;
+}

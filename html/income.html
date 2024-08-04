@@ -1,38 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Income</title>
-    <link rel="stylesheet" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/style.css" />
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const incomeForm = document.getElementById('incomeForm');
+        function addIncome() {
             const incomeInput = document.getElementById('incomeInput');
-            const incomeDisplay = document.getElementById('Income');
-            const storedIncome = localStorage.getItem('income');
-            if (storedIncome) {
-                const parsedIncome = parseFloat(storedIncome);
-                if (!isNaN(parsedIncome)) {
-                    incomeInput.value = parsedIncome;
-                    incomeDisplay.textContent = '₹' + parsedIncome.toFixed(2);
-                } else {
-                    console.error('Invalid income value stored:', storedIncome);
-                }
-                incomeInput.value = storedIncome;
-                incomeDisplay.textContent = '₹' + storedIncome;
+            const incomeAmount = parseFloat(incomeInput.value);
+            if (isNaN(incomeAmount) || incomeAmount <= 0) {
+                alert('Please enter a valid amount.');
+                return;
             }
-            incomeForm.addEventListener('submit', (event) => {
-                event.preventDefault();
-                const newIncome = parseFloat(incomeInput.value);
-                Console.log(newIncome)
-                localStorage.setItem('income', newIncome);
-                incomeDisplay.textContent = '₹' + newIncome.toFixed(2);
-            });
-        });
 
+            // Format the amount as currency
+            const formattedIncome = `${incomeAmount.toFixed(2)}`;
+
+            // Update the displayed income
+            document.getElementById('Income').textContent = formattedIncome;
+
+            // Save the income to local storage
+            localStorage.setItem('income', formattedIncome);
+
+            // Clear the input field
+            incomeInput.value = '';
+        }
     </script>
 </head>
+
 <body>
     <form id="incomeForm">
         <section class="Income section" id="Income-sec">
@@ -41,16 +38,12 @@
                 <div class="inc">
                     <h5>Income</h5>
                     <input type="number" id="incomeInput" name="amount" value="0" min="0.01" step="0.01" required />
-                    <span id="Income">₹0.00</span>
+                    <span id="Income">0.00</span>
                     <button id="inc-amt" class="amt plus" type="button" onclick="addIncome()">Add Income</button>
-
-                    
                 </div>
             </div>
         </section>
     </form>
-    
-    
-    <script src="../js/script.js"></script>
 </body>
+
 </html>

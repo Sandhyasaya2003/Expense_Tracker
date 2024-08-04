@@ -9,38 +9,91 @@
 <body>
     <h1>Expense Tracker ₹</h1>
     <ul>
+        <li><a href="index.html">Home</a></li>
         <li><a href="income.html">Income</a></li>
-        <li><a href="expense.html">Expense</a></li>
-        <li><a href="balance.html">Balance</a></li>
-        
     </ul>
-    
       <main>
-        <header>
-            <section class="Income section" id="Income">
+        <div class="grid-container">
+            <section>
                 <h2 class="section-title">Income</h2>
                 <div>
                     <h5>Income</h5>
-                    <span id="Income">₹0.00</span>
+                    <span id="Income">0.00</span>
                 </div>
             </section>
             
-            <section class="Expense section" id="Expense">
+            <section >
                 <h2 class="section-title">Expense</h2>
                 <div>
                     <h5>Expense</h5>
-                    <span id="Expense">₹0.00</span>
+                    ₹<span id="Expense">0.00</span>
                 </div>
             </section>
-            <section class="Balance section" id="Balance">
+            <section>
                 <h2 class="section-title">Balance</h2>
                 <div>
                     <h5>Balance</h5>
-                <span id="Balance">₹0.00</span>
+                    ₹<span id="Balance">0.00</span>
                 </div>
             </section> 
-        </header>
-        
+        </div>
+        <div>
+            <div class="container">
+                <h3>Add Transaction</h3>
+                <form id="expense-form">
+                    <select id="expense-category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="House rent">House rent</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Loans and EMI's">Loans and EMI's</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="date" id="expense-date" required />
+                    <textarea id="expense-name" rows="8" cols="40" placeholder="Description"></textarea>
+                    
+                    <input type="number" id="expense-amount" placeholder="Amount" required />
+                    
+                    <button type="submit">Add Expense</button>
+                </form>
+                <div class="expense-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expense-list"></tbody>
+                    </table>
+                    <div class="total-amount">
+                        <strong>Total:</strong> ₹<span id="total-amount">0</span>
+                    </div>
+                </div>
+                <div class="filter">
+                    <label for="filter-category">Filter by Category:</label>
+                    <select id="filter-category">
+                        <option value="All">All</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="House rent">House rent</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Loans and EMI's">Loans and EMI's</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+        </div>
       </main>
     <script src="../js/script.js"></script>
 </body>

@@ -137,3 +137,4 @@ document.getElementById('incomeForm').addEventListener('submit', function(event)
     event.preventDefault();
     addIncome();
 });
+

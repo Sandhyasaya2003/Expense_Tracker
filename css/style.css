@@ -120,6 +120,15 @@ form input, form button{
 .datepicker-input::-webkit-calendar-picker-indicator{
   cursor: pointer;
 }
+
+#expense-date::-webkit-calendar-picker-indicator{
+  cursor: pointer;
+}
+
+#filter-category{
+  cursor: pointer;
+}
+
 form button{
   background-color: darkgray;
   border:1px solid #333333;
